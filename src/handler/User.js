@@ -180,7 +180,7 @@ exports.userDetailsUpdate = async (req) => {
   }
 
   await User.update(
-    { firstName, lastName, phoneNumber },
+    { firstname: firstName, lastname: lastName, phonenumber: phoneNumber },
     {
       where: {
         user_id: id,
