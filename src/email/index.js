@@ -19,7 +19,7 @@ exports.signUpOtp = async ({ mail, name, token, otp }) => {
               <div> 
               <p>your OTP NUmber <strong>${otp}</strong></p>
               <button style="padding:10px; outline:none; border:none;   border-radius: 12px;">
-              <a style="color: black; font-size:16px;  text-decoration: none;" href="http://localhost:3000/verify?token=${token}&email=${mail}">Verify Email</a> </button>
+              <a style="color: black; font-size:16px;  text-decoration: none;" href="https://task-2-frontend.vercel.app/verify?token=${token}&email=${mail}">Verify Email</a> </button>
               <p style="color: black; font-family:cursive; font-size:15px letter-spacing: 1px">Thanks For Regards </p>
               <p style="color: black; font-family: cursive; font-size:15px letter-spacing: 1px">Our Mini Team </p>
               </div>
