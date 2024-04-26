@@ -18,6 +18,7 @@ const Product = sq.define(
         product_id: {
             type: DataTypes.STRING,
             defaultValue: DataTypes.UUIDV4,
+            unique: true,
 
         },
         name: {

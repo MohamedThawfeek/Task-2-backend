@@ -1,4 +1,6 @@
 const Company = require("../model/Company");
+const Employee = require("../model/Employee");
+const Product = require("../model/Product");
 const User = require("../model/User");
 
 
@@ -114,6 +116,17 @@ exports.getAllCompany = async (req) => {
     where: {
       user_id: id,
     },
+    attributes: ['company_id', 'user_id', 'name', 'address', 'phonenumber', 'gstnumber', 'createdAt'],
+    include: [{
+      model: Employee,
+      as: 'employees',
+      attributes: ['company_id', 'employee_id', 'name', 'address', 'phonenumber', 'age', 'gender', 'salary', 'role']
+    },
+  {
+    model: Product,
+    as: 'products',
+    attributes: ['company_id', 'product_id', 'name', 'category', 'price', 'quantity', 'description', 'image']
+  }]
   });
   return {
     success: true,

@@ -18,7 +18,8 @@ const Employee = sq.define(
         },
         employee_id: {
             type: DataTypes.STRING,
-            defaultValue: DataTypes.UUIDV4
+            defaultValue: DataTypes.UUIDV4,
+            unique: true
 
         },
         name: {
