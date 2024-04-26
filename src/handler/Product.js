@@ -1,49 +1,36 @@
+const Company = require("../model/Company");
 const Product = require("../model/Product");
-const UserDetails = require("../model/UserDetails");
 
 exports.createProduct = async (req) => {
-  const { id } = req;
   const { company_id, name, category, price, quantity, description, image } = req.body;
 
-  const findUser = await UserDetails.findOne({
+  const findUser = await Company.findOne({
     where: {
-      user_id: id,
+      company_id,
     },
   });
 
   if (!findUser) {
     return {
       success: false,
-      message: "User not found",
+      message: "Company not found",
     };
   }
 
-  if (findUser.company_details) {
-    const filteredCompany = await findUser?.company_details.filter(
-      (cmpy) => cmpy.id === company_id
-    )[0].id;
+  await Product.create({
+    company_id: company_id,
+    name: name,
+    category: category,
+    price: price,
+    quantity: quantity,
+    description: description,
+    image
+  });
 
-    if (!filteredCompany) {
-      return {
-        success: false,
-        message: "Company not found",
-      };
-    }
-    await Product.create({
-      company_id: company_id,
-      name: name,
-      category: category,
-      price: price,
-      quantity: quantity,
-      description: description,
-      image
-    });
-
-    return {
-      success: true,
-      message: "Product created successfully",
-    };
-  }
+  return {
+    success: true,
+    message: "Product created successfully",
+  };
 };
 
 exports.updateProduct = async (req) => {

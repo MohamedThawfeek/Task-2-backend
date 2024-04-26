@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sq } = require("../Database");
+const UserDetails = require('./UserDetails');
+const Company = require('./Company');
 
 
 const User = sq.define(
@@ -7,12 +9,15 @@ const User = sq.define(
     {
         id: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             autoIncrement: true,
+
         },
         user_id: {
             type: DataTypes.STRING,
-            defaultValue: DataTypes.UUIDV4
+            defaultValue: DataTypes.UUIDV4,
+            field: 'user_id',
+            primaryKey: true,
+            
         },
         firstname: {
             type: DataTypes.STRING,
@@ -56,6 +61,8 @@ const User = sq.define(
 );
 
 
+User.belongsTo(UserDetails, {foreignKey: "user_id"});
+User.hasMany(Company, {foreignKey: "user_id"});
 
 
 module.exports = User;

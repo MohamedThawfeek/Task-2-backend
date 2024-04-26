@@ -1,49 +1,37 @@
+const Company = require("../model/Company");
 const Employee = require("../model/Employee");
-const UserDetails = require("../model/UserDetails");
 
 
 exports.createEmployee = async (req) => {
-    const { id } = req
     const { company_id, name, address, phoneNumber, age, gender, salary, role } = req.body;
 
-    const findUser = await UserDetails.findOne({
+    const findUser = await Company.findOne({
         where: {
-            user_id: id
+            company_id
         }
     })
 
     if (!findUser) {
         return {
             success: false,
-            message: "User not found"
+            message: "Company not found"
         }
     }
 
-    if (findUser.company_details) {
-        const filteredCompany = await findUser?.company_details.filter((cmpy) => cmpy.id === company_id)[0].id
+    await Employee.create({
+        company_id: company_id,
+        address: address,
+        age: age,
+        gender: gender,
+        name: name,
+        phonenumber: phoneNumber,
+        salary: salary,
+        role: role,
+    })
 
-        if (!filteredCompany) {
-            return {
-                success: false,
-                message: "Company not found"
-            }
-        }
-        await Employee.create({
-            company_id: company_id,
-            address: address,
-            age: age,
-            gender: gender,
-            name: name,
-            phonenumber: phoneNumber,
-            salary: salary,
-            role: role,
-        })
-
-        return {
-            success: true,
-            message: "Employee created successfully"
-        }
-
+    return {
+        success: true,
+        message: "Employee created successfully"
     }
 }
 

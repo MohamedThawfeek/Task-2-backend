@@ -7,12 +7,14 @@ const Employee = sq.define(
     {
         id: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             autoIncrement: true,
         },
         company_id: {
             type: DataTypes.STRING,
             allowNull: false,
+            primaryKey: true,
+            field: "company_id",
+
         },
         employee_id: {
             type: DataTypes.STRING,

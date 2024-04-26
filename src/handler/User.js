@@ -5,6 +5,9 @@ const UserOPT = require("../model/UserOTP");
 const { generateOTP } = require("../utils/GenerateOTP");
 const { signUpOtp } = require("../email");
 const UserDetails = require("../model/UserDetails");
+const Company = require("../model/Company");
+const Employee = require("../model/Employee");
+const Product = require("../model/Product");
 
 require("dotenv").config({});
 
@@ -125,7 +128,32 @@ exports.userDetails = async (id) => {
       "phonenumber",
       "createdAt",
     ],
-    
+    include: [
+      {
+        model: UserDetails,
+        as: "users_detail",
+        attributes: ["dob", "gender", "qualification"],
+      },
+      {
+        model: Company,
+        as: "companies",
+        attributes: [
+          "company_id",
+          "name",
+          "address",
+          "phonenumber",
+          "gstnumber",
+        ],
+        include: [
+          {
+            model: Employee,
+          },
+          {
+            model: Product,
+          },
+        ],
+      },
+    ],
   });
   if (!user) {
     return {
@@ -268,11 +296,10 @@ exports.verifyUser = async (req) => {
     { expiresIn: "1d" }
   );
 
-
   return {
     success: true,
     message: "User verified successfully",
-    token
+    token,
   };
 };
 
@@ -294,8 +321,8 @@ exports.listCompany = async (req) => {
     success: true,
     message: "User details",
     data: user.company_details,
-  }
-}
+  };
+};
 
 exports.resend = async (req) => {
   const { email, status } = req.body;
@@ -330,7 +357,7 @@ exports.resend = async (req) => {
     };
   }
 
-  await UserOPT.destroy({where: { user_id: user?.user_id, status: status}})
+  await UserOPT.destroy({ where: { user_id: user?.user_id, status: status } });
 
   await UserOPT.create({
     user_id: user?.user_id,

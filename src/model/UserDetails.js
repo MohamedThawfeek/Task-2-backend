@@ -8,12 +8,13 @@ const UserDetails = sq.define(
     {
         id: {
             type: DataTypes.INTEGER,
-            primaryKey: true,
             autoIncrement: true,
         },
         user_id: {
             type: DataTypes.STRING,
             allowNull: false,
+            primaryKey: true,
+            field: "user_id",
         },
         dob: {
             type: DataTypes.DATE,
@@ -27,11 +28,7 @@ const UserDetails = sq.define(
         },
         qualification: {
             type: DataTypes.JSON,
-        }, 
-        company_details: {
-            type: DataTypes.JSON,
-
-        },   
+        },  
         createdAt: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
