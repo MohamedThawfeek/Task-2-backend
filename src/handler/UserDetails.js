@@ -91,7 +91,7 @@ exports.getDetails = async (req, res) => {
 
   return {
     success: true,
-    message: "Details updated successfully",
+    message: "Details get successfully",
     data: user,
   };
 };

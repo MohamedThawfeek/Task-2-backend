@@ -45,7 +45,7 @@ router.post('/get-all-product', getAllProduct)
 
 //company routes
 router.post('/create-company', [userAuth], createCompany)
-router.post('/edit-company', updateCompany)
+router.post('/edit-company', [userAuth], updateCompany)
 router.get('/list-company', [userAuth], getAllCompany)
 router.post('/delete-company', deletCompany)
 router.post('/edit-single-company', [userAuth], updateSingleCompany)
